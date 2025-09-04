@@ -1,0 +1,55 @@
+:root {
+  --primary-dark: #0d3b66; /* azul escuro */
+  --primary-light: #1c5aa6;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+.navbar {
+  background-color: var(--primary-dark);
+}
+
+.navbar-brand, .nav-link {
+  color: white !important;
+}
+
+.nav-link.active {
+  background: var(--primary-light);
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+/* Grade do calendário */
+.calendar {
+  display: grid;
+  grid-template-columns: 80px repeat(7, 1fr);
+  border: 1px solid #dee2e6;
+}
+
+.calendar-header {
+  background: #f1f3f5;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid #dee2e6;
+  padding: 10px;
+}
+
+.calendar-time {
+  border-right: 1px solid #dee2e6;
+  text-align: right;
+  padding: 5px;
+  font-size: 0.9rem;
+  background: #fafafa;
+}
+
+.calendar-cell {
+  border: 1px solid #dee2e6;
+  height: 50px;
+  cursor: pointer;
+}
+
+.calendar-cell:hover {
+  background-color: #e7f0ff;
+}
