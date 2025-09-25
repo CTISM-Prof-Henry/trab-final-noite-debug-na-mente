@@ -1,5 +1,5 @@
 :root {
-  --primary-dark: #0d3b66; /* azul escuro */
+  --primary-dark: #0d3b66;
   --primary-light: #1c5aa6;
 }
 
@@ -52,4 +52,13 @@ body {
 
 .calendar-cell:hover {
   background-color: #e7f0ff;
+}
+
+/* Modals customizados */
+.modal-header.bg-primary {
+  color: white;
+}
+
+.modal-header.bg-warning {
+  color: black;
 }
