@@ -1,0 +1,11 @@
+site_name: Sistema de Agendamento de Salas
+site_description: Documentação do projeto de agendamento de salas, auditórios e laboratórios.
+nav:
+  - Início: index.md
+  - Funcionamento: funcionamento.md
+  - Instalação: instalacao.md
+  - Tecnologias: tecnologias.md
+  - Melhorias Futuras: melhorias.md
+theme:
+  name: material
+  language: pt-BR
