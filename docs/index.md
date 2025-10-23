@@ -24,7 +24,7 @@ O projeto utiliza:
 
 ---
 
-## 🛠️ Pré-requisitos
+##  Pré-requisitos
 
 Antes de rodar o site, certifique-se de ter:
 
@@ -36,9 +36,9 @@ Antes de rodar o site, certifique-se de ter:
 
 ---
 
-## 📥 Passo a passo para rodar o site
+##  Passo a passo para rodar o site
 
-### 1️⃣ Baixar os arquivos
+### 1️ Baixar os arquivos
 
 Clone o repositório ou baixe o ZIP:
 
