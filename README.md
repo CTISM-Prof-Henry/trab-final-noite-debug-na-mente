@@ -1,50 +1,42 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/BJmkW5Ih)
-# Título do repositório
+# Sistema de Agendamento de Salas
 
-Descrição curta do repositório.
+ Bem-vindo à documentação do Sistema de Agendamento de Salas, um projeto desenvolvido para facilitar o gerenciamento de salas de aula, laboratórios e auditórios em uma instituição de ensino.
 
 ## Sumário
 
 * [Pré-requisitos](#pré-requisitos)
-* [Instalação](#instalação)
-* [Instruções de uso](#instruções-de-uso)
 * [Contato](#contato)
 * [Bibliografia](#bibliografia)
 
 ## Pré-requisitos
 
-Descreva aqui brevemente os pré-requisitos necessários para executar o código-fonte. Descreva também
-a configuração mínima da máquina em que o código foi desenvolvido, e se alguma configuração em particular é essencial
-para sua execução (por exemplo, placa de vídeo dedicada):
+Necessária IDE (VS Code || WebStorm || IntelliJ IDEA) para realizar alterações nos Arquivos HTML/CSS/JS (Detalhes na documentação abaixo)
+
+Configuração mínima da máquina em que o código foi desenvolvido:
 
 | Configuração        | Valor                    |
 |---------------------|--------------------------|
 | Sistema operacional | Windows 10 Pro (64 bits) |
 | Processador         | Intel core i7 9700       |
-| Memória RAM         | 16GB                     |
+| Memória RAM         | 8GB                      |
 | Necessita rede?     | Sim                      |
 
 
-## Instalação
+## Documentação 
 
-Descreva aqui as instruções para instalação das ferramentas para execução do código-fonte: 
-
-```bash
-sudo apt-get install nano
-```
-
-## Instruções de Uso
-
-Descreva aqui o passo-a-passo que outros usuários precisam realizar para conseguir executar com sucesso o código-fonte
-deste projeto:
-
-```bash
-echo "olá mundo!"
-```
+> Todo os requisitos e orientações voltadas ao funcionamento do software estão presentes no Site abaixo:
+https://ctism-prof-henry.github.io/trab-final-noite-debug-na-mente/
 
 ## Contato
 
-O repositório foi originalmente desenvolvido por Fulano: [fulano@ufsm.br]()
+O repositório foi originalmente desenvolvido por Crystofer Oliveira e Eduardo Amaral: 
+
+Contato: 
+
+[corporativo.crystofer1@gmail.com]() // [crystofer.oliveira@acad.ufsm.br]()
+
+[corporativo.amaral@gmail.com]() // [eduardo.oliveira@acad.ufsm.br]()
 
 ## Bibliografia
 
