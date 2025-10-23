@@ -1,0 +1,730 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentação do projeto de agendamento de salas, auditórios e laboratórios.">
+      
+      
+      
+      
+        <link rel="prev" href="../funcionamento/">
+      
+      
+        <link rel="next" href="../melhorias/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+    
+    
+      
+        <title>Instalação - Sistema de Agendamento de Salas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.2a3383ac.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#instalacao-e-execucao-do-sistema-de-agendamento-de-salas" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Sistema de Agendamento de Salas" class="md-header__button md-logo" aria-label="Sistema de Agendamento de Salas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Sistema de Agendamento de Salas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Instalação
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Sistema de Agendamento de Salas" class="md-nav__button md-logo" aria-label="Sistema de Agendamento de Salas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Sistema de Agendamento de Salas
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Início
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../funcionamento/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Funcionamento
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Instalação
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Instalação
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#caso-voce-nao-tenha-muito-conhecimento-em-baixar-do-git-via-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caso você não tenha muito conhecimento em baixar do git via terminal:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#baiar-via-zip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baiar via ZIP:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-tenha-conhecimento-via-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caso tenha conhecimento via terminal:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-pre-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Pré-requisitos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Pré-requisitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Git
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-baixar-o-projeto-clonar-o-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Baixar o Projeto (Clonar o Repositório)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-acessar-o-projeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Acessar o Projeto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-estrutura-do-projeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Estrutura do Projeto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-executar-o-site-localmente" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Executar o Site Localmente
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-banco-de-dados-indexeddb" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Banco de Dados (IndexedDB)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-conclusao" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Conclusão
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tecnologias.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Tecnologias
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../melhorias/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Melhorias Futuras
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#caso-voce-nao-tenha-muito-conhecimento-em-baixar-do-git-via-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caso você não tenha muito conhecimento em baixar do git via terminal:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#baiar-via-zip" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baiar via ZIP:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caso-tenha-conhecimento-via-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caso tenha conhecimento via terminal:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-pre-requisitos" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Pré-requisitos
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Pré-requisitos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git" class="md-nav__link">
+    <span class="md-ellipsis">
+      🔹 Git
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-baixar-o-projeto-clonar-o-repositorio" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Baixar o Projeto (Clonar o Repositório)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-acessar-o-projeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Acessar o Projeto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-estrutura-do-projeto" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Estrutura do Projeto
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-executar-o-site-localmente" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Executar o Site Localmente
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-banco-de-dados-indexeddb" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Banco de Dados (IndexedDB)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-conclusao" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Conclusão
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="instalacao-e-execucao-do-sistema-de-agendamento-de-salas">Instalação e Execução do Sistema de Agendamento de Salas</h1>
+<p>Este guia ensina <strong>passo a passo</strong> como baixar, instalar e rodar o sistema de agendamento de salas localmente.<br />
+Mesmo que você nunca tenha usado Git ou MkDocs antes, basta seguir as instruções abaixo.</p>
+<hr />
+<h2 id="caso-voce-nao-tenha-muito-conhecimento-em-baixar-do-git-via-terminal">Caso você não tenha muito conhecimento em baixar do git via terminal:</h2>
+<h2 id="baiar-via-zip">Baiar via ZIP:</h2>
+<p>1.Acesse a página do repositório no GitHub.</p>
+<p>https://github.com/CTISM-Prof-Henry/trab-final-noite-debug-na-mente</p>
+<p>2.Clique em Code → Download ZIP.</p>
+<p>3.Extraia o .zip e entre na pasta do projeto.</p>
+<hr />
+<h2 id="caso-tenha-conhecimento-via-terminal">Caso tenha conhecimento via terminal:</h2>
+<h2 id="1-pre-requisitos">1. Pré-requisitos</h2>
+<p>Antes de começar, verifique se você possui os seguintes itens instalados:</p>
+<h3 id="git">🔹 Git</h3>
+<p>O <strong>Git</strong> é usado para baixar o código do projeto diretamente do repositório no GitHub.</p>
+<ul>
+<li>Para instalar no <strong>Windows</strong>:</li>
+<li>Acesse <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></li>
+<li>Baixe o instalador e siga as instruções (pode deixar todas as opções padrão).</li>
+<li>
+<p>Após instalado, abra o terminal (ou PowerShell) e digite:
+     <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>--version
+</span></code></pre></div></p>
+</li>
+<li>
+<p>No <strong>Linux (Ubuntu/Debian)</strong>:
+  ```bash
+  sudo apt update
+  sudo apt install git</p>
+</li>
+</ul>
+<h2 id="2-baixar-o-projeto-clonar-o-repositorio">2. Baixar o Projeto (Clonar o Repositório)</h2>
+<p>Agora, vamos baixar o código do site diretamente do GitHub.</p>
+<ol>
+<li>Escolha uma pasta no seu computador (por exemplo, Documentos ou Área de Trabalho).</li>
+<li>Clique com o botão direito e selecione <strong>“Abrir no terminal”</strong> ou <strong>“Git Bash Here”</strong>.</li>
+<li>Digite o comando abaixo:</li>
+</ol>
+<p>```bash
+   git clone https://github.com/CTISM-Prof-Henry/trab-final-noite-debug-na-mente.git</p>
+<p>Aguarde o download terminar.
+  Isso criará uma nova pasta chamada:</p>
+<p>trab-final-noite-debug-na-mente</p>
+<h2 id="3-acessar-o-projeto">3. Acessar o Projeto</h2>
+<p>Depois que o repositório for clonado, entre na pasta do projeto:
+  cd trab-final-noite-debug-na-mente</p>
+<h2 id="4-estrutura-do-projeto">4. Estrutura do Projeto</h2>
+<p>Dentro da pasta, você verá algo como:</p>
+<p>trab-final-noite-debug-na-mente/
+├── index.html</p>
+<p>├── script.js</p>
+<p>├── style.css</p>
+<p>├── docs/</p>
+<p>│   ├── index.md
+│   ├── instalacao.md
+│   ├── funcionamento.md
+│   └── melhorias.md
+└── mkdocs.yml</p>
+<h2 id="5-executar-o-site-localmente">5. Executar o Site Localmente</h2>
+<p>O site é feito em HTML, CSS e JavaScript puro, então não precisa de servidor.
+Para executá-lo:</p>
+<ol>
+<li>Localize o arquivo index.html dentro da pasta do projeto.</li>
+<li>Clique duas vezes nele.</li>
+</ol>
+<p>O site abrirá automaticamente no navegador padrão.</p>
+<h2 id="6-banco-de-dados-indexeddb">6. Banco de Dados (IndexedDB)</h2>
+<p>O projeto usa o IndexedDB, um banco de dados interno do navegador.</p>
+<p>🔹 Não é necessário instalar nada.</p>
+<p>🔹Os dados são salvos localmente, dentro do próprio navegador.</p>
+<p>🔹Mesmo ao fechar o site, as informações continuam armazenadas.</p>
+<p>Isso é ideal para testes e uso local. Em versões futuras, o sistema poderá se conectar a um banco de dados real (como MySQL ou Firebase).</p>
+<h2 id="7-conclusao">7. Conclusão</h2>
+<p>Se todos os passos foram seguidos corretamente:</p>
+<p>🔹O site deve abrir normalmente no navegador.</p>
+<p>🔹Professores podem cadastrar, agendar e alterar salas.</p>
+<p>🔹Alunos podem visualizar os horários e locais disponíveis.</p>
+<p>Você agora possui o sistema rodando localmente e pode fazer alterações livremente no código, visualizar a documentação, e até contribuir com melhorias no GitHub! </p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
