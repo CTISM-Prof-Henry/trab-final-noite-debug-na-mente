@@ -1,6 +1,20 @@
 # Funcionamento do Sistema
 
-O sistema de agendamento de salas foi desenvolvido para ser simples, didático e funcional, com armazenamento local via **IndexedDB**.
+--- 
+
+## 🔹Possíveis Problemas:
+
+🔹Página branca / CSS não carregado: verifique caminhos relativos e nomes de arquivos.
+
+🔹Fetch retornando 404: execute via servidor local (python -m http.server) para evitar problemas 
+      de rota.
+
+🔹Formulário não salva: verifique se o script está escutando o evento correto e se não há
+      preventDefault() indevido.
+
+
+
+  O sistema de agendamento de salas foi desenvolvido para ser simples, didático e funcional, com armazenamento local via **IndexedDB**.
 
 ---
 
@@ -37,8 +51,25 @@ O sistema de agendamento de salas foi desenvolvido para ser simples, didático e
 
 ---
 
+## 🔹Alterações & Desenvolvimento
+
+Onde alterar o comportamento:
+
+HTML: editar os templates em protótipo/*.html.
+
+CSS: file protótipo/css/*.css — mantenha comentários úteis; remova redundâncias com cautela para não alterar o visual.
+
+JS: protótipo/js/*.js — lógica de agendamento e validações.
+
+
+
+
+---
+
 ## 🔹 Observações
 
 - O sistema funciona offline, desde que o navegador já tenha carregado os recursos externos (Bootstrap e ícones);  
 - O IndexedDB mantém os dados mesmo após fechar o navegador;  
 - Caso queira limpar dados, é necessário limpar o cache ou histórico do navegador.
+
+

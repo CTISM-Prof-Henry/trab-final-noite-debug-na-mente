@@ -4,6 +4,18 @@ Embora o sistema já seja funcional, algumas melhorias podem deixá-lo mais comp
 
 ---
 
+## Boas práticas
+
+Antes de alterar, rode o aplicativo e escreva testes básicos manuais.
+
+Faça commits pequenos com mensagens descritivas.
+
+Se for adicionar dependências, atualize este documento com versões e como instalá-las.
+
+
+
+---
+
 ## 🔹 Autenticação de usuários
 
 - Implementar **login e senha real**, diferenciando professores e alunos;  

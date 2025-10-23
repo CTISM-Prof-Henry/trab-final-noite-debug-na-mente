@@ -5,6 +5,22 @@ Mesmo que você nunca tenha usado Git ou MkDocs antes, basta seguir as instruç�
 
 ---
 
+## Caso você não tenha muito conhecimento em baixar do git via terminal:
+
+## Baiar via ZIP:
+
+  1.Acesse a página do repositório no GitHub.
+  
+  https://github.com/CTISM-Prof-Henry/trab-final-noite-debug-na-mente
+  
+  2.Clique em Code → Download ZIP.
+  
+  3.Extraia o .zip e entre na pasta do projeto.
+
+
+---
+## Caso tenha conhecimento via terminal:
+
 ##  1. Pré-requisitos
 
 Antes de começar, verifique se você possui os seguintes itens instalados:
