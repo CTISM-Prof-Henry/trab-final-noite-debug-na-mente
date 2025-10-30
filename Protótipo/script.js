@@ -1,110 +1,153 @@
+"use strict";
+
+/* ===== Helpers rápidos ===== */
+const $  = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+const byId = (id) => document.getElementById(id);
+
+/* ===== IndexedDB ===== */
 let db;
+const DB_NAME = "AgendamentoDB";
+const STORES = {
+  SALAS: "salas",
+  AGEND: "agendamentos",
+};
 
-/* ===== IndexedDB Setup ===== */
-const request = indexedDB.open("AgendamentoDB", 1);
+const request = indexedDB.open(DB_NAME, 1);
 
-request.onupgradeneeded = function (e) {
+request.onupgradeneeded = (e) => {
   db = e.target.result;
 
-  if (!db.objectStoreNames.contains("salas")) {
-    db.createObjectStore("salas", { keyPath: "id", autoIncrement: true });
+  if (!db.objectStoreNames.contains(STORES.SALAS)) {
+    db.createObjectStore(STORES.SALAS, { keyPath: "id", autoIncrement: true });
   }
-  if (!db.objectStoreNames.contains("agendamentos")) {
-    const store = db.createObjectStore("agendamentos", { keyPath: "id", autoIncrement: true });
+  if (!db.objectStoreNames.contains(STORES.AGEND)) {
+    const store = db.createObjectStore(STORES.AGEND, { keyPath: "id", autoIncrement: true });
     store.createIndex("sala_dia", ["sala", "dia"], { unique: false });
   }
 };
 
-request.onsuccess = function (e) {
+request.onsuccess = (e) => {
   db = e.target.result;
+  bindListeners();
   generateCalendar();
 };
 
-request.onerror = function () {
-  alert("Erro ao abrir IndexedDB");
-};
+request.onerror = () => alert("Erro ao abrir IndexedDB");
 
-/* ===== Navegação ===== */
+/* =========================================================================
+   Navegação
+   ====================================================================== */
 function showPage(pageId, event) {
-  document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-  document.getElementById(pageId).style.display = 'block';
-  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
-  if (pageId === "listarSalas") {
-    carregarSalas();
-  }
-  if (event && event.target) event.target.classList.add('active');
+  $$(".page").forEach((p) => (p.style.display = "none"));
+  byId(pageId).style.display = "block";
+
+  $$(".nav-link").forEach((n) => n.classList.remove("active"));
+  if (event && event.target) event.target.classList.add("active");
+
+  if (pageId === "listarSalas") carregarSalas();
 }
 
-/* ===== Modal Login ===== */
+/* =========================================================================
+   Login (simples, para demonstração)
+   ====================================================================== */
 function abrirLogin() {
-  new bootstrap.Modal(document.getElementById('modalLogin')).show();
+  new bootstrap.Modal(byId("modalLogin")).show();
 }
 
 function logar() {
-  const usuario = document.getElementById('usuario').value;
-  const senha = document.getElementById('senha').value;
+  const usuario = byId("usuario").value;
+  const senha   = byId("senha").value;
 
   if (usuario === "admin" && senha === "1234") {
     alert("Login realizado com sucesso!");
-    bootstrap.Modal.getInstance(document.getElementById('modalLogin')).hide();
+    bootstrap.Modal.getInstance(byId("modalLogin")).hide();
   } else {
     alert("Usuário ou senha inválidos!");
   }
 }
 
-/* ===== Cadastro de Salas ===== */
-const form = document.getElementById("formCadastroSala");
+/* =========================================================================
+   Cadastro de Salas
+   ====================================================================== */
+const formCadastroSala = byId("formCadastroSala");
 
-form.onsubmit = (e) => {
+formCadastroSala.onsubmit = (e) => {
   e.preventDefault();
 
-  const tipo = document.getElementById("tipoCadastro").value;
-  const bloco = document.getElementById("blocoCadastro").value;
-  const nome = document.getElementById("nomeSala").value;
-  const capacidade = parseInt(document.getElementById("capacidade").value, 10);
+  const tipo       = byId("tipoCadastro").value;
+  const bloco      = byId("blocoCadastro").value;
+  const nome       = byId("nomeSala").value;
+  const capacidade = parseInt(byId("capacidade").value, 10);
 
-  const sala = { tipo, bloco, nome, capacidade };
+  const registro = { tipo, bloco, nome, capacidade };
 
-  const editId = document.getElementById("cadastro").dataset.editId;
-  const tx = db.transaction("salas", "readwrite");
-  const store = tx.objectStore("salas");
+  const editId = byId("cadastro").dataset.editId;
+  const tx   = db.transaction(STORES.SALAS, "readwrite");
+  const store = tx.objectStore(STORES.SALAS);
 
   if (editId) {
-    sala.id = parseInt(editId, 10);
-    store.put(sala);
-    delete document.getElementById("cadastro").dataset.editId;
+    registro.id = parseInt(editId, 10);
+    store.put(registro);
+    delete byId("cadastro").dataset.editId;
   } else {
-    store.add(sala);
+    store.add(registro);
   }
 
   tx.oncomplete = () => {
-    form.reset();
+    formCadastroSala.reset();
     alert("Sala salva com sucesso!");
     carregarSalas();
   };
 };
 
-/* ===== Modal de Agendamento ===== */
-function openModal(hora, diaIndex) {
-  const dayNames = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-  const startHour = parseInt(hora.split(':')[0], 10);
-  const dayLabel = dayNames[diaIndex];
+/* Abrir cadastro a partir do modal de “sem salas” */
+function abrirCadastroDoModalSemSalas() {
+  const modalAg = bootstrap.Modal.getInstance(byId("modalAgendar"));
+  if (modalAg) modalAg.hide();
 
-  const horarioInput = document.getElementById('modalHorario');
+  const modalSem = bootstrap.Modal.getInstance(byId("modalSemSalas"));
+  if (modalSem) modalSem.hide();
+
+  showPage("cadastro", { target: document.querySelector('[onclick*="cadastro"]') });
+}
+
+/* =========================================================================
+   Modal de Agendamento
+   ====================================================================== */
+function openModal(hora, diaIndex) {
+  // Dia/hora escolhidos pelo usuário no calendário
+  const dayNames  = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const startHour = parseInt(hora.split(":")[0], 10);
+
+  const horarioInput = byId("modalHorario");
   horarioInput.dataset.startHour = String(startHour);
-  horarioInput.dataset.day = diaIndex;
-  horarioInput.dataset.dayLabel = dayLabel;
+  horarioInput.dataset.day       = String(diaIndex);
+  horarioInput.dataset.dayLabel  = dayNames[diaIndex];
 
   atualizarHorario();
   atualizarSalas();
-  new bootstrap.Modal(document.getElementById('modalAgendar')).show();
+
+  new bootstrap.Modal(byId("modalAgendar")).show();
 }
 
-/* Atualizar lista de salas com verificação de bloqueio */
+/* Atualiza o preview do horário no input do modal (conforme períodos) */
+function atualizarHorario() {
+  const horarioInput = byId("modalHorario");
+
+  const startHour = parseInt(horarioInput.dataset.startHour || "8", 10);
+  const endHour   = startHour + parseInt($('input[name="periodos"]:checked').value, 10);
+  const dayLabel  = horarioInput.dataset.dayLabel || "";
+
+  horarioInput.dataset.endHour = String(endHour);
+  horarioInput.value = `${dayLabel}, ${String(startHour).padStart(2, "0")}:00 - ${String(endHour).padStart(2, "0")}:00`;
+}
+
+/* Monta a lista de salas no modal, já indicando ocupadas no horário escolhido */
 function atualizarSalas() {
-  const tipo = document.getElementById("tipoSala").value;
-  const bloco = document.getElementById("blocoSala").value;
-  const salaSelect = document.getElementById("sala");
+  const tipo       = byId("tipoSala").value;
+  const bloco      = byId("blocoSala").value;
+  const salaSelect = byId("sala");
   salaSelect.innerHTML = "";
 
   if (!tipo || !bloco) {
@@ -112,33 +155,32 @@ function atualizarSalas() {
     return;
   }
 
-  const tx = db.transaction("salas", "readonly");
-  tx.objectStore("salas").getAll().onsuccess = function (e) {
-    const todasSalas = e.target.result;
-    const lista = todasSalas.filter(s => s.tipo === tipo && s.bloco === bloco);
+  const tx = db.transaction(STORES.SALAS, "readonly");
+  tx.objectStore(STORES.SALAS).getAll().onsuccess = (e) => {
+    const todasSalas = e.target.result || [];
+    const lista = todasSalas.filter((s) => s.tipo === tipo && s.bloco === bloco);
 
     if (lista.length === 0) {
       salaSelect.innerHTML = "<option>Sem salas para este bloco</option>";
 
-      // Fechar modal de agendamento antes de abrir o modal de atenção
-      const modalAg = bootstrap.Modal.getInstance(document.getElementById('modalAgendar'));
+      // Fecha modal de agendamento e abre o de atenção
+      const modalAg = bootstrap.Modal.getInstance(byId("modalAgendar"));
       if (modalAg) modalAg.hide();
-
-      new bootstrap.Modal(document.getElementById('modalSemSalas')).show();
+      new bootstrap.Modal(byId("modalSemSalas")).show();
       return;
     }
 
-    const horarioInput = document.getElementById("modalHorario");
-    const startHour = parseInt(horarioInput.dataset.startHour, 10);
-    const endHour = startHour + parseInt(document.querySelector('input[name="periodos"]:checked').value, 10);
-    const dia = parseInt(horarioInput.dataset.day, 10);
+    // Checa ocupação para o intervalo selecionado
+    const startHour = parseInt(byId("modalHorario").dataset.startHour, 10);
+    const endHour   = parseInt(byId("modalHorario").dataset.endHour, 10);
+    const dia       = parseInt(byId("modalHorario").dataset.day, 10);
 
-    const tx2 = db.transaction("agendamentos", "readonly");
-    tx2.objectStore("agendamentos").getAll().onsuccess = function (ev) {
-      const agendamentos = ev.target.result;
+    const txAg = db.transaction(STORES.AGEND, "readonly");
+    txAg.objectStore(STORES.AGEND).getAll().onsuccess = (ev) => {
+      const agendamentos = ev.target.result || [];
 
-      lista.forEach(s => {
-        const estaOcupada = agendamentos.some(ag => 
+      lista.forEach((s) => {
+        const ocupada = agendamentos.some((ag) =>
           ag.sala === s.nome &&
           ag.dia === dia &&
           !(endHour <= ag.startHour || startHour >= ag.endHour)
@@ -146,107 +188,95 @@ function atualizarSalas() {
 
         const opt = document.createElement("option");
         opt.value = s.nome;
-        opt.textContent = s.nome;
-        if (estaOcupada) {
-          opt.disabled = true;
-          opt.textContent += " (Ocupada)";
-        }
+        opt.textContent = ocupada ? `${s.nome} (Ocupada)` : s.nome;
+        if (ocupada) opt.disabled = true;
+
         salaSelect.appendChild(opt);
       });
     };
   };
 }
 
-/* Atualizar horário final */
-function atualizarHorario() {
-  const horarioInput = document.getElementById("modalHorario");
-  const startHour = parseInt(horarioInput.dataset.startHour || "8", 10);
-  const dayLabel = horarioInput.dataset.dayLabel || "";
-  const periodos = parseInt(document.querySelector('input[name="periodos"]:checked').value, 10);
+/* Confirma o agendamento (botão do modal) */
+byId("confirmarAgendamento").addEventListener("click", () => {
+  const sala      = byId("sala").value;
+  const professor = byId("professor").value;
+  const horario   = byId("modalHorario");
 
-  const endHour = startHour + periodos;
-  horarioInput.dataset.endHour = endHour;
-
-  horarioInput.value = `${dayLabel}, ${String(startHour).padStart(2, '0')}:00 - ${String(endHour).padStart(2, '0')}:00`;
-}
-
-/* Confirmar Agendamento */
-document.getElementById("confirmarAgendamento").addEventListener("click", function () {
-  const sala = document.getElementById("sala").value;
-  const professor = document.getElementById("professor").value;
-  const horarioInput = document.getElementById("modalHorario");
-
-  if (!sala || !professor || sala === "Sem salas para este bloco") {
-    alert("Selecione uma sala válida.");
+  if (!sala || !professor) {
+    alert("Preencha sala e professor.");
     return;
   }
 
-  const agendamento = {
+  const data = {
     sala,
     professor,
-    dia: parseInt(horarioInput.dataset.day, 10),
-    startHour: parseInt(horarioInput.dataset.startHour, 10),
-    endHour: parseInt(horarioInput.dataset.endHour, 10)
+    dia:       parseInt(horario.dataset.day, 10),
+    startHour: parseInt(horario.dataset.startHour, 10),
+    endHour:   parseInt(horario.dataset.endHour, 10),
   };
 
-  verificarConflitoESalvar(agendamento);
+  verificarConflitoESalvar(data);
 });
 
-/* Verificar conflito antes de salvar */
+/* Verifica conflito de horário antes de gravar */
 function verificarConflitoESalvar(data) {
-  const tx = db.transaction("agendamentos", "readonly");
-  const index = tx.objectStore("agendamentos").index("sala_dia");
-  const range = IDBKeyRange.only([data.sala, data.dia]);
+  const tx     = db.transaction(STORES.AGEND, "readonly");
+  const index  = tx.objectStore(STORES.AGEND).index("sala_dia");
+  const range  = IDBKeyRange.only([data.sala, data.dia]);
 
   let conflito = null;
 
-  index.openCursor(range).onsuccess = function (e) {
+  index.openCursor(range).onsuccess = (e) => {
     const cursor = e.target.result;
-    if (cursor) {
-      const ag = cursor.value;
-      if (!(data.endHour <= ag.startHour || data.startHour >= ag.endHour)) {
-        conflito = ag;
-      }
-      cursor.continue();
+    if (!cursor) return;
+
+    const ag = cursor.value;
+    // Sem conflito se intervalos não se sobrepõem
+    if (!(data.endHour <= ag.startHour || data.startHour >= ag.endHour)) {
+      conflito = ag;
     }
+    cursor.continue();
   };
 
-  tx.oncomplete = function () {
+  tx.oncomplete = () => {
     if (conflito) {
       alert(`Horário ocupado pelo professor ${conflito.professor}, selecione outro.`);
-    } else {
-      const tx2 = db.transaction("agendamentos", "readwrite");
-      tx2.objectStore("agendamentos").add(data);
-      tx2.oncomplete = () => {
-        alert("Agendamento confirmado!");
-        marcarAgendamentos();
-        bootstrap.Modal.getInstance(document.getElementById('modalAgendar')).hide();
-      };
+      return;
     }
+
+    const tx2 = db.transaction(STORES.AGEND, "readwrite");
+    tx2.objectStore(STORES.AGEND).add(data);
+    tx2.oncomplete = () => {
+      bootstrap.Modal.getInstance(byId("modalAgendar")).hide();
+      marcarAgendamentos();
+      alert("Agendamento salvo!");
+    };
   };
 }
 
-/* ===== Pintar calendário com agendamentos ===== */
+/* =========================================================================
+   Calendário
+   ====================================================================== */
 function marcarAgendamentos() {
-  const tx = db.transaction("agendamentos", "readonly");
-  tx.objectStore("agendamentos").getAll().onsuccess = function (e) {
-    const lista = e.target.result;
+  // Limpa marcações
+  $$(".calendar-cell").forEach((c) => {
+    c.style.backgroundColor = "";
+    c.title = "";
+    const dia  = parseInt(c.dataset.dia, 10);
+    c.onclick = () => openModal(c.dataset.hora, dia);
+  });
 
-    document.querySelectorAll(".calendar-cell").forEach(c => {
-      c.style.backgroundColor = "";
-      c.title = "";
-      const hora = parseInt(c.dataset.hora.split(":")[0], 10);
-      const dia = parseInt(c.dataset.dia, 10);
-      c.onclick = () => openModal(c.dataset.hora, dia);
-    });
+  // Reaplica marcações
+  const tx = db.transaction(STORES.AGEND, "readonly");
+  tx.objectStore(STORES.AGEND).getAll().onsuccess = (e) => {
+    const lista = e.target.result || [];
 
-    lista.forEach(ag => {
+    lista.forEach((ag) => {
       for (let h = ag.startHour; h < ag.endHour; h++) {
-        const cell = document.querySelector(
-          `.calendar-cell[data-dia="${ag.dia}"][data-hora="${h}:00"]`
-        );
+        const cell = $(`.calendar-cell[data-dia="${ag.dia}"][data-hora="${String(h).padStart(2, "0")}:00"]`);
         if (cell) {
-          cell.style.backgroundColor = "#f8d7da";
+          cell.style.backgroundColor = "#ffd6a5"; // destaque simples
           cell.title = `Ocupado: ${ag.professor} (${ag.sala})`;
           cell.onclick = () => {
             alert(`📌 Detalhes:\nProfessor: ${ag.professor}\nSala: ${ag.sala}\nHorário: ${ag.startHour}:00 - ${ag.endHour}:00`);
@@ -257,103 +287,106 @@ function marcarAgendamentos() {
   };
 }
 
-/* ===== Montar calendário ===== */
 function generateCalendar() {
-  const calendar = document.getElementById("calendar");
-
-  let html = `<div></div>`;
+  const calendar = byId("calendar");
   const dias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-  dias.forEach(d => html += `<div class="calendar-header">${d}</div>`);
 
+  // Cabeçalho (primeiro espaço vazio + dias)
+  let html = `<div></div>`;
+  dias.forEach((d) => (html += `<div class="calendar-header">${d}</div>`));
+
+  // Linhas de 08:00 a 22:00
   for (let hour = 8; hour <= 22; hour++) {
     html += `<div class="calendar-time">${hour}:00</div>`;
     for (let day = 0; day < 7; day++) {
-      html += `<div class="calendar-cell" 
-                     data-dia="${day}" 
-                     data-hora="${hour}:00"
-                     onclick="openModal('${hour}:00','${day}')"></div>`;
+      html += `
+        <div
+          class="calendar-cell"
+          data-dia="${day}"
+          data-hora="${String(hour).padStart(2, "0")}:00"
+          ></div>`;
     }
   }
+
   calendar.innerHTML = html;
+
+  // Clicks nas células (abre modal)
+  $$(".calendar-cell").forEach((cell) => {
+    const dia = parseInt(cell.dataset.dia, 10);
+    cell.onclick = () => openModal(cell.dataset.hora, dia);
+  });
 
   marcarAgendamentos();
 }
 
-/* ===== Listeners ===== */
-document.getElementById("tipoSala").addEventListener("change", atualizarSalas);
-document.getElementById("blocoSala").addEventListener("change", atualizarSalas);
-document.querySelectorAll("input[name='periodos']").forEach(r => r.addEventListener("change", atualizarHorario));
+/* Listeners de UI (fora de funções globais) */
+function bindListeners() {
+  byId("tipoSala").addEventListener("change", atualizarSalas);
+  byId("blocoSala").addEventListener("change", atualizarSalas);
+  $$("input[name='periodos']").forEach((r) => r.addEventListener("change", atualizarHorario));
+}
 
-/* ===== Listagem de Salas ===== */
+/* =========================================================================
+   Lista, edição e exclusão de Salas
+   ====================================================================== */
 function carregarSalas() {
-  const tbody = document.querySelector("#tabelaSalas tbody");
+  const tbody = $("#tabelaSalas tbody");
   tbody.innerHTML = "";
 
-  const tx = db.transaction("salas", "readonly");
-  const store = tx.objectStore("salas");
-  store.getAll().onsuccess = (event) => {
-    const salas = event.target.result;
+  const tx = db.transaction(STORES.SALAS, "readonly");
+  tx.objectStore(STORES.SALAS).getAll().onsuccess = (e) => {
+    const salas = e.target.result || [];
+
     if (salas.length === 0) {
       tbody.innerHTML = `<tr><td colspan="5" class="text-center">Nenhuma sala cadastrada</td></tr>`;
       return;
     }
-    salas.forEach(sala => {
+
+    salas.forEach((sala) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-    <td>${sala.tipo}</td>
-    <td>${sala.bloco}</td>
-    <td>${sala.nome}</td>
-    <td>${sala.capacidade}</td>
-    <td>
-      <button class="btn btn-sm btn-outline-primary me-1" onclick="editarSala(${sala.id})">
-        <i class="bi bi-pencil"></i>
-      </button>
-      <button class="btn btn-sm btn-outline-danger" onclick="excluirSala(${sala.id})">
-        <i class="bi bi-trash"></i>
-      </button>
-    </td>`;
+        <td>${sala.tipo}</td>
+        <td>${sala.bloco}</td>
+        <td>${sala.nome}</td>
+        <td>${sala.capacidade}</td>
+        <td class="text-nowrap">
+          <button class="btn btn-sm btn-outline-primary me-2" onclick="editarSala(${sala.id})">
+            <i class="bi bi-pencil"></i> Editar
+          </button>
+          <button class="btn btn-sm btn-outline-danger" onclick="excluirSala(${sala.id})">
+            <i class="bi bi-trash"></i> Excluir
+          </button>
+        </td>
+      `;
       tbody.appendChild(tr);
     });
   };
 }
 
-/* Excluir sala */
-function excluirSala(id) {
-  if (!confirm("Tem certeza que deseja excluir esta sala?")) return;
-
-  const tx = db.transaction("salas", "readwrite");
-  const store = tx.objectStore("salas");
-  store.delete(id);
-  tx.oncomplete = () => {
-    carregarSalas();
-  };
-}
-
-/* Editar sala */
 function editarSala(id) {
-  const tx = db.transaction("salas", "readonly");
-  const store = tx.objectStore("salas");
-  store.get(id).onsuccess = (event) => {
-    const sala = event.target.result;
+  const tx = db.transaction(STORES.SALAS, "readonly");
+  tx.objectStore(STORES.SALAS).get(id).onsuccess = (e) => {
+    const sala = e.target.result;
     if (!sala) return;
 
-    document.getElementById("tipoCadastro").value = sala.tipo;
-    document.getElementById("blocoCadastro").value = sala.bloco;
-    document.getElementById("nomeSala").value = sala.nome;
-    document.getElementById("capacidade").value = sala.capacidade;
+    byId("tipoCadastro").value  = sala.tipo;
+    byId("blocoCadastro").value = sala.bloco;
+    byId("nomeSala").value      = sala.nome;
+    byId("capacidade").value    = sala.capacidade;
 
-    document.getElementById("cadastro").dataset.editId = id;
+    byId("cadastro").dataset.editId = String(id);
     showPage("cadastro", { target: document.querySelector('[onclick*="cadastro"]') });
   };
 }
 
-/* Abrir cadastro do modal de atenção */
-function abrirCadastroDoModalSemSalas() {
-  const modalAg = bootstrap.Modal.getInstance(document.getElementById('modalAgendar'));
-  if (modalAg) modalAg.hide();
+function excluirSala(id) {
+  if (!confirm("Tem certeza que deseja excluir esta sala?")) return;
 
-  const modalSem = bootstrap.Modal.getInstance(document.getElementById('modalSemSalas'));
-  if (modalSem) modalSem.hide();
-
-  showPage('cadastro', { target: document.querySelector('[onclick*="cadastro"]') });
+  const tx = db.transaction(STORES.SALAS, "readwrite");
+  tx.objectStore(STORES.SALAS).delete(id);
+  tx.oncomplete = () => {
+    alert("Sala excluída.");
+    carregarSalas();
+  };
 }
+
