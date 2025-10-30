@@ -6,6 +6,7 @@
 ## Sumário
 
 * [Pré-requisitos](#pré-requisitos)
+* *[Documentação](#Documentação)
 * [Contato](#contato)
 * [Bibliografia](#bibliografia)
 
