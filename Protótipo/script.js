@@ -15,14 +15,36 @@ request.onupgradeneeded = function (e) {
   }
 };
 
-request.onsuccess = function (e) {
-  db = e.target.result;
+request.onsuccess = function () {
+  db = request.result;
   generateCalendar();
+  renderLegendProfessores(); // legenda (Mudança 1)
 };
 
 request.onerror = function () {
   alert("Erro ao abrir IndexedDB");
 };
+
+/* ===== Cores por Professor (Mudança 1) ===== */
+const PROF_COLORS = {
+  "Alencar": "#ffd166", // amarelo
+  "Henry":   "#f4a261", // laranja
+  "Bruno":   "#ff7f50", // coral
+  "Daniel":  "#ff6b6b"  // salmão
+};
+
+/* Renderiza a legenda (professor -> cor) */
+function renderLegendProfessores() {
+  const cont = document.getElementById("legendProfessores");
+  if (!cont) return;
+  cont.innerHTML = "";
+  Object.entries(PROF_COLORS).forEach(([nome, cor]) => {
+    const item = document.createElement("div");
+    item.className = "legend-item";
+    item.innerHTML = `<span class="legend-swatch" style="background:${cor}"></span><span>${nome}</span>`;
+    cont.appendChild(item);
+  });
+}
 
 /* ===== Navegação ===== */
 function showPage(pageId, event) {
@@ -32,11 +54,9 @@ function showPage(pageId, event) {
   if (event && event.target) {
     event.target.classList.add('active');
   }
-
   if (pageId === "listarSalas") {
-  carregarSalas();
-}
-
+    carregarSalas();
+  }
 }
 
 /* ===== Modal Login ===== */
@@ -251,7 +271,8 @@ function marcarAgendamentos() {
           `.calendar-cell[data-dia="${ag.dia}"][data-hora="${String(h).padStart(2, "0")}:00"]`
         );
         if (cell) {
-          cell.style.backgroundColor = "#ffd6a5";
+          // COR por professor (Mudança 1)
+          cell.style.backgroundColor = (PROF_COLORS[ag.professor] || "#ffd6a5");
           cell.title = `Ocupado: ${ag.professor} (${ag.sala})`;
           cell.onclick = () => {
             alert(`📌 Detalhes:\nProfessor: ${ag.professor}\nSala: ${ag.sala}\nHorário: ${ag.startHour}:00 - ${ag.endHour}:00`);
@@ -277,7 +298,7 @@ function generateCalendar() {
           class="calendar-cell"
           data-dia="${day}"
           data-hora="${String(hour).padStart(2, "0")}:00"
-          ></div>`;
+        ></div>`;
     }
   }
 
