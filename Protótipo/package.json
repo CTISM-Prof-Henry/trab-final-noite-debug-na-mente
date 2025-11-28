@@ -1,0 +1,36 @@
+{
+  "name": "prototipo-agendamento-salas",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@babel/preset-env": "^7.28.3",
+    "@babel/register": "^7.28.3",
+    "nyc": "^17.1.0",
+    "qunit": "^2.24.1"
+  },
+  "scripts": {
+    "test": "qunit \"static/js/test/**/*.test.js\"",
+    "test:cov": "nyc npm test"
+  },
+  "nyc": {
+    "require": [
+      "@babel/register"
+    ],
+    "babel": true,
+    "reporter": [
+      "text",
+      "html"
+    ],
+    "include": [
+      "static/js/src/**/*.js"
+    ],
+    "exclude": [
+      "static/js/test/**/*.js"
+    ],
+    "all": true,
+    "extension": [
+      ".js"
+    ]
+  }
+}

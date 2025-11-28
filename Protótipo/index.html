@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Agendamento de Salas</title>
+  <title>Minha Sala na UFSM</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
@@ -13,22 +13,25 @@
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg">
+  <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="#">Agendamento</a>
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" onclick="showPage('home', event)" style="cursor:pointer;"><img src="UFSM_principal_cor.png" alt="UFSM" width="32" height="32" class="brand-logo"/><span>Minha Sala na UFSM</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="menu">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active" href="#" onclick="showPage('agenda', event)">Agendamento de Salas</a>
+            <a class="nav-link active" data-page="home" href="#" onclick="showPage('home', event)">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="showPage('cadastro', event)">Cadastro de Salas</a>
+            <a class="nav-link" data-page="agenda" href="#" onclick="showPage('agenda', event)">Calendário</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="showPage('listarSalas', event)">Listar Salas</a>
+            <a class="nav-link" data-page="cadastro" href="#" onclick="showPage('cadastro', event)">Cadastro de Salas</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-page="listarSalas" href="#" onclick="showPage('listarSalas', event)">Listar Salas</a>
           </li>
         </ul>
         <button class="btn btn-primary btn-sm" onclick="abrirLogin()">Login</button>
@@ -38,12 +41,197 @@
 
   <!-- Conteúdo -->
   <div class="container my-4">
+        <!-- Página Home -->
+    <div id="home" class="page">
+      <section class="home-hero position-relative overflow-hidden rounded-4 p-4 p-md-5 mb-4">
+        <img src="UFSM_principal_cor.png" class="home-watermark" alt="Marca d’água UFSM">
+        <div class="row align-items-center g-4 position-relative">
+          <div class="col-lg-7">
+            <div class="d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill home-pill mb-3">
+              <i class="bi bi-door-open"></i>
+              <span>Sistema de agendamento de salas</span>
+            </div>
+
+            <h1 class="display-6 fw-bold text-white mb-3 home-title">
+              Minha Sala na UFSM
+            </h1>
+
+            <p class="lead text-white-50 mb-4">
+              Agende, organize e visualize reservas de forma rápida — sem bagunça e sem “dupla reserva”.
+            </p>
+
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-light btn-lg shadow-sm"
+                onclick="showPage('agenda', { target: document.querySelector('[data-page=\'agenda\']') })">
+                <i class="bi bi-calendar-week me-2"></i>Ir para o calendário
+              </button>
+
+              <button class="btn btn-outline-light btn-lg"
+                onclick="showPage('cadastro', { target: document.querySelector('[data-page=\'cadastro\']') })">
+                <i class="bi bi-plus-circle me-2"></i>Cadastrar sala
+              </button>
+            </div>
+
+            <div class="text-white-50 small mt-3">
+              <i class="bi bi-info-circle me-1"></i>
+              Dica: filtre por tipo, bloco ou sala para encontrar o que você precisa mais rápido.
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="card border-0 shadow-lg rounded-4 home-float">
+              <div class="card-body p-4">
+                <h5 class="fw-bold mb-3">
+                  <i class="bi bi-lightning-charge-fill me-2"></i>Atalhos
+                </h5>
+
+                <div class="d-grid gap-2">
+                  <button class="btn btn-primary"
+                    onclick="showPage('agenda', { target: document.querySelector('[data-page=\'agenda\']') })">
+                    <i class="bi bi-calendar2-check me-2"></i>Agendar agora
+                  </button>
+
+                  <button class="btn btn-outline-primary"
+                    onclick="showPage('listarSalas', { target: document.querySelector('[data-page=\'listarSalas\']') })">
+                    <i class="bi bi-list-task me-2"></i>Ver salas cadastradas
+                  </button>
+
+                  <button class="btn btn-outline-secondary"
+                    onclick="abrirLogin()">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Login
+                  </button>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-flex gap-3 align-items-start">
+                  <div class="home-step-icon">
+                    <i class="bi bi-1-circle-fill"></i>
+                  </div>
+                  <div>
+                    <div class="fw-semibold">Escolha a semana</div>
+                    <div class="text-muted small">Use as setas do calendário para navegar.</div>
+                  </div>
+                </div>
+
+                <div class="d-flex gap-3 align-items-start mt-3">
+                  <div class="home-step-icon">
+                    <i class="bi bi-2-circle-fill"></i>
+                  </div>
+                  <div>
+                    <div class="fw-semibold">Selecione a sala</div>
+                    <div class="text-muted small">Filtre por bloco/tipo e selecione a sala desejada.</div>
+                  </div>
+                </div>
+
+                <div class="d-flex gap-3 align-items-start mt-3">
+                  <div class="home-step-icon">
+                    <i class="bi bi-3-circle-fill"></i>
+                  </div>
+                  <div>
+                    <div class="fw-semibold">Agende o horário</div>
+                    <div class="text-muted small">O sistema bloqueia conflitos automaticamente.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <div class="row g-3 g-md-4">
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
+            <div class="card-body p-4">
+              <div class="home-card-icon mb-3"><i class="bi bi-calendar-week"></i></div>
+              <h5 class="fw-bold">Calendário</h5>
+              <p class="text-muted mb-4">Visualize a semana e faça reservas por horário.</p>
+              <button class="btn btn-primary w-100"
+                onclick="showPage('agenda', { target: document.querySelector('[data-page=\'agenda\']') })">
+                Abrir calendário
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
+            <div class="card-body p-4">
+              <div class="home-card-icon mb-3"><i class="bi bi-plus-square"></i></div>
+              <h5 class="fw-bold">Cadastro de salas</h5>
+              <p class="text-muted mb-4">Adicione salas com tipo e bloco para manter tudo organizado.</p>
+              <button class="btn btn-outline-primary w-100"
+                onclick="showPage('cadastro', { target: document.querySelector('[data-page=\'cadastro\']') })">
+                Cadastrar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
+            <div class="card-body p-4">
+              <div class="home-card-icon mb-3"><i class="bi bi-card-list"></i></div>
+              <h5 class="fw-bold">Lista de salas</h5>
+              <p class="text-muted mb-4">Consulte, edite e exclua salas cadastradas.</p>
+              <button class="btn btn-outline-secondary w-100"
+                onclick="showPage('listarSalas', { target: document.querySelector('[data-page=\'listarSalas\']') })">
+                Ver salas
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Página Agendamento -->
-    <div id="agenda" class="page">
+    <div id="agenda" class="page" style="display:none;">
       <h2 class="mb-3">Calendário Semanal</h2>
 
+      <!-- BARRA SUPERIOR: Semana (esq) + Filtro (dir) -->
+      <div class="week-bar mb-2">
+        <!-- Esquerda: navegação de semana -->
+        <div class="week-nav">
+          <button id="prevWeek" class="btn btn-outline-secondary btn-sm" aria-label="Semana anterior">‹</button>
+          <button id="weekLabel" class="btn btn-link week-label" type="button" title="Selecionar semana">
+            <!-- ex.: 26 OUT até 01 NOV -->
+          </button>
+          <input id="weekPicker" type="date" class="visually-hidden" aria-hidden="true" />
+          <button id="nextWeek" class="btn btn-outline-secondary btn-sm" aria-label="Próxima semana">›</button>
+        </div>
+
+        <!-- Direita: filtro por Tipo/Bloco/Sala -->
+        <div class="week-filter">
+          <select id="filtroTipo" class="form-select form-select-sm">
+            <option value="">Tipo</option>
+            <option value="laboratorio">Laboratório</option>
+            <option value="sala">Sala de Aula</option>
+            <option value="auditorio">Auditório</option>
+          </select>
+
+          <select id="filtroBloco" class="form-select form-select-sm">
+            <option value="">Bloco</option>
+            <option value="A">Bloco A</option>
+            <option value="B">Bloco B</option>
+            <option value="C">Bloco C</option>
+            <option value="D">Bloco D</option>
+            <option value="E">Bloco E</option>
+            <option value="F">Bloco F</option>
+            <option value="G">Bloco G</option>
+          </select>
+
+          <select id="filtroSala" class="form-select form-select-sm">
+            <option value="">Sala</option>
+          </select>
+
+          <button id="btnAplicarFiltro" class="btn btn-primary btn-sm">Filtrar</button>
+        </div>
+      </div>
+
       <div class="calendar" id="calendar"></div>
-      <!-- LEGENDA (Mudança 1, agora EMBAIXO do calendário) -->
+
+      <!-- LEGENDA -->
       <div id="legendProfessores" class="legend mt-3"></div>
     </div>
 
@@ -101,11 +289,31 @@
           </tr>
         </thead>
         <tbody>
-          <!-- linhas via JS -->
+          <!-- via JS -->
         </tbody>
       </table>
     </div>
   </div>
+
+  <!-- Footer -->
+  <footer class="site-footer mt-5">
+    <div class="container py-4">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-6 d-flex align-items-center gap-2">
+          <img src="UFSM_principal_cor.png" alt="UFSM" width="28" height="28" class="opacity-75">
+          <div>
+            <div class="fw-semibold">Minha Sala na UFSM</div>
+            <div class="small text-muted">Trabalho final • Sistema de agendamento de salas</div>
+          </div>
+        </div>
+
+        <div class="col-md-6 text-md-end small text-muted">
+          <span class="me-2"><i class="bi bi-shield-check"></i> Evita conflitos automaticamente</span>
+          <span>© 2025</span>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <!-- Modal Agendar -->
   <div class="modal fade" id="modalAgendar" tabindex="-1" aria-hidden="true">
@@ -140,42 +348,26 @@
                   <option value="G">Bloco G</option>
                 </select>
               </div>
-              <div class="col-6">
+
+              <div class="col-12">
                 <label class="form-label" for="sala">Sala</label>
                 <select id="sala" class="form-select" required>
                   <option>Selecione tipo e bloco</option>
                 </select>
               </div>
 
-              <!-- Períodos (Mudança 2 cuidará desse comportamento) -->
+              <!-- Intervalo livre -->
+              <input type="hidden" id="modalDia" value="">
               <div class="col-6">
-                <label class="form-label d-block">Períodos</label>
-                <div class="d-flex justify-content-between">
-                  <div class="form-check">
-                    <label>
-                      <input class="form-check-input" type="radio" name="periodos" value="1" checked>
-                    </label>
-                    <label class="form-check-label">1</label>
-                  </div>
-                  <div class="form-check">
-                    <label>
-                      <input class="form-check-input" type="radio" name="periodos" value="2">
-                    </label>
-                    <label class="form-check-label">2</label>
-                  </div>
-                  <div class="form-check">
-                    <label>
-                      <input class="form-check-input" type="radio" name="periodos" value="3">
-                    </label>
-                    <label class="form-check-label">3</label>
-                  </div>
-                  <div class="form-check">
-                    <label>
-                      <input class="form-check-input" type="radio" name="periodos" value="4">
-                    </label>
-                    <label class="form-check-label">4</label>
-                  </div>
-                </div>
+                <label class="form-label" for="horaInicio">Início</label>
+                <input id="horaInicio" type="time" class="form-control" step="3600" min="08:00" max="22:00" required>
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="horaFim">Fim</label>
+                <input id="horaFim" type="time" class="form-control" step="3600" min="09:00" max="23:00" required>
+              </div>
+              <div class="form-text px-2">
+                Dica: para “dia todo”, selecione 08:00 até 22:00.
               </div>
 
               <div class="col-12">
@@ -190,9 +382,14 @@
               </div>
 
               <div class="col-12">
-                <label class="form-label" for="modalHorario">Horário</label>
-                <input id="modalHorario" type="text" class="form-control" readonly>
+                <label class="form-label" for="repeatMode">Repetir</label>
+                <select id="repeatMode" class="form-select">
+                  <option value="none" selected>Nunca</option>
+                  <option value="weekly">Semanalmente</option>
+                  <option value="monthly">Mensalmente</option>
+                </select>
               </div>
+
             </div>
           </form>
         </div>

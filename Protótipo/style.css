@@ -3,26 +3,52 @@
   --primary-light: #1c5aa6;
 
   /* Linhas do calendário mais escuras */
-  --cal-border-strong: #adb5bd; /* contorno principal */
-  --cal-border: #ced4da;        /* linhas internas */
+  --cal-border-strong: #adb5bd;
+  --cal-border: #ced4da;
 }
 
-body {
-  background-color: #f8f9fa;
+body { background-color: #f8f9fa; }
+
+.navbar { background-color: var(--primary-dark); }
+.navbar-brand, .nav-link { color: white !important; }
+
+/* Destaque da aba ativa */
+.navbar .nav-link {
+  color: #fff !important;
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-right: 6px;
+  transition: background-color .15s ease-in-out, color .15s ease-in-out;
+}
+.navbar .nav-link:hover { background-color: rgba(255,255,255,0.10); }
+.navbar .nav-link.active {
+  background-color: var(--primary-light);
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25);
 }
 
-.navbar {
-  background-color: var(--primary-dark);
+/* ===== Barra superior ===== */
+.week-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
+.week-nav { display: flex; align-items: center; gap: 12px; }
+.week-label { font-weight: 600; text-decoration: underline; }
 
-.navbar-brand, .nav-link {
-  color: white !important;
+.week-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+.week-filter select { min-width: 140px; }
 
 /* ===== Calendário ===== */
 .calendar {
   display: grid;
-  grid-template-columns: 80px repeat(7, 1fr);
+  grid-template-columns: 100px repeat(7, 1fr);
   border: 1px solid var(--cal-border-strong);
 }
 
@@ -37,7 +63,8 @@ body {
 .calendar-time {
   border-right: 1px solid var(--cal-border-strong);
   text-align: right;
-  padding: 5px;
+  padding: 5px 8px;
+  font-weight: 600;
 }
 
 .calendar-cell {
@@ -47,27 +74,15 @@ body {
   transition: background-color 0.15s ease-in-out;
 }
 
-.calendar-cell:hover {
-  background-color: #e7f0ff;
-}
+.calendar-cell:hover { background-color: #e7f0ff; }
 
-/* Modals customizados */
-.modal-header.bg-primary {
-  color: white;
-}
-
-.modal-header.bg-warning {
-  color: black;
-}
-
-/* ===== Legenda de Professores (Mudança 1) ===== */
+/* ===== Legenda ===== */
 .legend {
   display: flex;
   gap: 12px;
   align-items: center;
   flex-wrap: wrap;
 }
-
 .legend-item {
   display: inline-flex;
   align-items: center;
@@ -78,10 +93,87 @@ body {
   border-radius: 6px;
   padding: 4px 8px;
 }
-
 .legend-swatch {
   width: 14px;
   height: 14px;
   border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0,0,0,0.25);
+}
+
+/* =========================================================
+   HOME (Minha Sala na UFSM)
+   - CSS curtinho só pro “uau” visual (Bootstrap faz o resto)
+   - Para testar cores: troque --primary-dark e --primary-light lá em cima
+     Exemplo 1 (azul forte):   #0b3d91 / #1e66d0
+     Exemplo 2 (vinho/UFSM):   #7a1220 / #c62839
+     Exemplo 3 (grafite):      #111827 / #2563eb
+   ========================================================= */
+
+.brand-logo { border-radius: 6px; }
+
+.home-hero{
+  background:
+    radial-gradient(1200px 500px at 20% 10%, rgba(255,255,255,0.12), transparent 60%),
+    linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+}
+
+.home-watermark{
+  position: absolute;
+  right: -120px;
+  bottom: -140px;
+  width: 620px;
+  max-width: 85vw;
+  opacity: 0.10;
+  transform: rotate(-10deg);
+  filter: grayscale(100%);
+  pointer-events: none;
+  user-select: none;
+}
+
+.home-pill{
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.92);
+  border: 1px solid rgba(255,255,255,0.18);
+  backdrop-filter: blur(6px);
+}
+
+.home-step-icon{
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--primary-dark);
+}
+
+.home-card-icon{
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(13,59,102,0.10);
+  color: var(--primary-dark);
+  font-size: 1.25rem;
+}
+
+.home-card{
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.home-card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 .8rem 1.6rem rgba(0,0,0,0.08) !important;
+}
+
+.home-float{
+  animation: floaty 5s ease-in-out infinite;
+}
+
+@keyframes floaty{
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
+
+/* ===== Footer ===== */
+.site-footer{
+  background: #fff;
+  border-top: 1px solid #e9ecef;
 }
