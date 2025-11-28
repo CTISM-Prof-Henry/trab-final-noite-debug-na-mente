@@ -119,16 +119,25 @@ body { background-color: #f8f9fa; }
 
 .home-watermark{
   position: absolute;
-  right: -120px;
-  bottom: -140px;
-  width: 620px;
-  max-width: 85vw;
-  opacity: 0.10;
-  transform: rotate(-10deg);
+  left: -180px;
+  top: -80px;
+  right: auto;
+  bottom: auto;
+  width: 900px;
+  max-width: 110vw;
+  opacity: 0.12;
+  transform: rotate(-12deg);
   filter: grayscale(100%);
   pointer-events: none;
   user-select: none;
 }
+
+/* Garante que o conteúdo fique acima da marca d'água */
+.home-hero > :not(.home-watermark){
+  position: relative;
+  z-index: 1;
+}
+.home-watermark{ z-index: 0; }
 
 .home-pill{
   background: rgba(255,255,255,0.14);

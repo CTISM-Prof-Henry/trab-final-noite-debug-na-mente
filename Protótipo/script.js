@@ -104,14 +104,10 @@ function showPage(pageId, event) {
 /* ===== Login ===== */
 function abrirLogin() { abrirModal($id("modalLogin")); }
 function logar() {
-  const usuario = $id("usuario").value;
-  const senha   = $id("senha").value;
-  if (usuario === "admin" && senha === "1234") {
-    alert("Login realizado com sucesso!");
-    fecharModal($id("modalLogin"));
-  } else {
-    alert("Usuário ou senha inválidos!");
-  }
+  // Login "vitrine": apenas fecha o modal (sem validação / sem regras)
+  const form = $id("formLogin");
+  if (form) form.reset();
+  fecharModal($id("modalLogin"));
 }
 
 /* ===== Cadastro de Salas ===== */

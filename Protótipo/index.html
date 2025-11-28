@@ -15,7 +15,9 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" onclick="showPage('home', event)" style="cursor:pointer;"><img src="UFSM_principal_cor.png" alt="UFSM" width="32" height="32" class="brand-logo"/><span>Minha Sala na UFSM</span></a>
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#" onclick="showPage('home', event)"
+        style="cursor:pointer;"><img src="UFSM_principal_cor.png" alt="UFSM" width="32" height="32"
+          class="brand-logo" /><span>Minha Sala na UFSM</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -28,10 +30,12 @@
             <a class="nav-link" data-page="agenda" href="#" onclick="showPage('agenda', event)">Calendário</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-page="cadastro" href="#" onclick="showPage('cadastro', event)">Cadastro de Salas</a>
+            <a class="nav-link" data-page="cadastro" href="#" onclick="showPage('cadastro', event)">Cadastro de
+              Salas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-page="listarSalas" href="#" onclick="showPage('listarSalas', event)">Listar Salas</a>
+            <a class="nav-link" data-page="listarSalas" href="#" onclick="showPage('listarSalas', event)">Listar
+              Salas</a>
           </li>
         </ul>
         <button class="btn btn-primary btn-sm" onclick="abrirLogin()">Login</button>
@@ -41,7 +45,7 @@
 
   <!-- Conteúdo -->
   <div class="container my-4">
-        <!-- Página Home -->
+    <!-- Página Home -->
     <div id="home" class="page">
       <section class="home-hero position-relative overflow-hidden rounded-4 p-4 p-md-5 mb-4">
         <img src="UFSM_principal_cor.png" class="home-watermark" alt="Marca d’água UFSM">
@@ -57,18 +61,13 @@
             </h1>
 
             <p class="lead text-white-50 mb-4">
-              Agende, organize e visualize reservas de forma rápida — sem bagunça e sem “dupla reserva”.
+              Agende, organize e visualize reservas de forma rápida.
             </p>
 
             <div class="d-flex flex-wrap gap-2">
               <button class="btn btn-light btn-lg shadow-sm"
                 onclick="showPage('agenda', { target: document.querySelector('[data-page=\'agenda\']') })">
                 <i class="bi bi-calendar-week me-2"></i>Ir para o calendário
-              </button>
-
-              <button class="btn btn-outline-light btn-lg"
-                onclick="showPage('cadastro', { target: document.querySelector('[data-page=\'cadastro\']') })">
-                <i class="bi bi-plus-circle me-2"></i>Cadastrar sala
               </button>
             </div>
 
@@ -87,8 +86,8 @@
 
                 <div class="d-grid gap-2">
                   <button class="btn btn-primary"
-                    onclick="showPage('agenda', { target: document.querySelector('[data-page=\'agenda\']') })">
-                    <i class="bi bi-calendar2-check me-2"></i>Agendar agora
+                    onclick="showPage('cadastro', { target: document.querySelector('[data-page=\'cadastro\']') })">
+                    <i class="bi bi-plus-circle me-2"></i>Cadastrar sala
                   </button>
 
                   <button class="btn btn-outline-primary"
@@ -96,8 +95,7 @@
                     <i class="bi bi-list-task me-2"></i>Ver salas cadastradas
                   </button>
 
-                  <button class="btn btn-outline-secondary"
-                    onclick="abrirLogin()">
+                  <button class="btn btn-outline-secondary" onclick="abrirLogin()">
                     <i class="bi bi-box-arrow-in-right me-2"></i>Login
                   </button>
                 </div>
@@ -143,13 +141,12 @@
       <div class="row g-3 g-md-4">
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
-            <div class="card-body p-4">
-              <div class="home-card-icon mb-3"><i class="bi bi-calendar-week"></i></div>
-              <h5 class="fw-bold">Calendário</h5>
-              <p class="text-muted mb-4">Visualize a semana e faça reservas por horário.</p>
-              <button class="btn btn-primary w-100"
-                onclick="showPage('agenda', { target: document.querySelector('[data-page=\'agenda\']') })">
-                Abrir calendário
+            <div class="card-body p-4 d-flex flex-column">
+              <div class="home-card-icon mb-3"><i class="bi bi-person-plus"></i></div>
+              <h5 class="fw-bold">Cadastrar usuário (em Breve) </h5>
+              <p class="text-muted mb-4">Espaço reservado para criação de usuários do sistema (vitrine).</p>
+              <button class="btn btn-primary w-100 mt-auto" type="button">
+                Cadastrar usuário (em Breve)
               </button>
             </div>
           </div>
@@ -157,13 +154,12 @@
 
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
-            <div class="card-body p-4">
-              <div class="home-card-icon mb-3"><i class="bi bi-plus-square"></i></div>
-              <h5 class="fw-bold">Cadastro de salas</h5>
-              <p class="text-muted mb-4">Adicione salas com tipo e bloco para manter tudo organizado.</p>
-              <button class="btn btn-outline-primary w-100"
-                onclick="showPage('cadastro', { target: document.querySelector('[data-page=\'cadastro\']') })">
-                Cadastrar
+            <div class="card-body p-4 d-flex flex-column">
+              <div class="home-card-icon mb-3"><i class="bi bi-person-badge"></i></div>
+              <h5 class="fw-bold">Cadastrar professor (em Breve)</h5>
+              <p class="text-muted mb-4">Espaço reservado para cadastro de professores (vitrine).</p>
+              <button class="btn btn-outline-primary w-100 mt-auto" type="button">
+                Cadastrar professor (em Breve)
               </button>
             </div>
           </div>
@@ -171,13 +167,13 @@
 
         <div class="col-md-4">
           <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
-            <div class="card-body p-4">
+            <div class="card-body p-4 d-flex flex-column">
               <div class="home-card-icon mb-3"><i class="bi bi-card-list"></i></div>
               <h5 class="fw-bold">Lista de salas</h5>
               <p class="text-muted mb-4">Consulte, edite e exclua salas cadastradas.</p>
-              <button class="btn btn-outline-secondary w-100"
+              <button class="btn btn-outline-secondary w-100 mt-auto"
                 onclick="showPage('listarSalas', { target: document.querySelector('[data-page=\'listarSalas\']') })">
-                Ver salas
+                Ver salas cadastradas
               </button>
             </div>
           </div>
