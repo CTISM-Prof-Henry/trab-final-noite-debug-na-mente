@@ -7,7 +7,25 @@
   --cal-border: #ced4da;
 }
 
-body { background-color: #f8f9fa; }
+/* =========================================================
+   STICKY FOOTER (rodapé sempre no fim da tela)
+   - O body vira uma coluna flex ocupando a altura da viewport
+   - O container principal (o seu ".container.my-4") cresce (flex: 1)
+     e empurra o footer para baixo quando a página é pequena
+   ========================================================= */
+html, body { height: 100%; } /* garante altura total para o cálculo do layout */
+
+body{
+  background-color: #f8f9fa;  /* mantém seu fundo padrão */
+  min-height: 100vh;          /* ocupa pelo menos a altura total da tela */
+  display: flex;              /* ativa layout flex */
+  flex-direction: column;     /* empilha navbar, conteúdo e footer em coluna */
+}
+
+/* No seu HTML o conteúdo está em: <div class="container my-4"> */
+body > .container.my-4{
+  flex: 1 0 auto; /* cresce para ocupar espaço livre e empurrar o footer */
+}
 
 .navbar { background-color: var(--primary-dark); }
 .navbar-brand, .nav-link { color: white !important; }
@@ -185,4 +203,5 @@ body { background-color: #f8f9fa; }
 .site-footer{
   background: #fff;
   border-top: 1px solid #e9ecef;
+  flex-shrink: 0; /* evita o footer “encolher” dentro do flex do body */
 }

@@ -37,6 +37,12 @@
             <a class="nav-link" data-page="listarSalas" href="#" onclick="showPage('listarSalas', event)">Listar
               Salas</a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-page="cadastroUsuario" href="#" onclick="showPage('cadastroUsuario', event)">
+              Cadastro de Usuários
+            </a>
+          </li>
         </ul>
         <button class="btn btn-primary btn-sm" onclick="abrirLogin()">Login</button>
       </div>
@@ -138,34 +144,22 @@
         </div>
       </section>
 
-      <div class="row g-3 g-md-4">
-        <div class="col-md-4">
+      <div class="row g-3 g-md-4 justify-content-center">
+        <div class="col-12 col-md-6 col-lg-5">
           <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
             <div class="card-body p-4 d-flex flex-column">
               <div class="home-card-icon mb-3"><i class="bi bi-person-plus"></i></div>
-              <h5 class="fw-bold">Cadastrar usuário (em Breve) </h5>
-              <p class="text-muted mb-4">Espaço reservado para criação de usuários do sistema (vitrine).</p>
-              <button class="btn btn-primary w-100 mt-auto" type="button">
-                Cadastrar usuário (em Breve)
+              <h5 class="fw-bold">Cadastrar usuário</h5>
+              <p class="text-muted mb-4">Crie usuários para acessar e operar o sistema.</p>
+              <button class="btn btn-primary w-100 mt-auto" type="button"
+                onclick="showPage('cadastroUsuario', { target: document.querySelector('[data-page=\'cadastroUsuario\']') })">Cadastrar
+                usuário
               </button>
             </div>
           </div>
         </div>
 
-        <div class="col-md-4">
-          <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
-            <div class="card-body p-4 d-flex flex-column">
-              <div class="home-card-icon mb-3"><i class="bi bi-person-badge"></i></div>
-              <h5 class="fw-bold">Cadastrar professor (em Breve)</h5>
-              <p class="text-muted mb-4">Espaço reservado para cadastro de professores (vitrine).</p>
-              <button class="btn btn-outline-primary w-100 mt-auto" type="button">
-                Cadastrar professor (em Breve)
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4">
+        <div class="col-12 col-md-6 col-lg-5">
           <div class="card h-100 border-0 shadow-sm rounded-4 home-card">
             <div class="card-body p-4 d-flex flex-column">
               <div class="home-card-icon mb-3"><i class="bi bi-card-list"></i></div>
@@ -289,6 +283,94 @@
         </tbody>
       </table>
     </div>
+
+    <!-- Página Cadastro de Usuários -->
+    <div id="cadastroUsuario" class="page" style="display:none;">
+      <h2 class="mb-3">Cadastro de Usuários</h2>
+      <p class="text-muted">
+        Cadastre usuários para acessar o sistema (ex.: admin, professor, etc.).
+      </p>
+
+      <form id="formCadastroUsuario" class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label" for="nomeUsuario">Nome completo</label>
+          <input id="nomeUsuario" type="text" class="form-control" placeholder="Ex.: João da Silva" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="emailUsuario">E-mail</label>
+          <input id="emailUsuario" type="email" class="form-control" placeholder="exemplo@ufsm.br" required>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="loginUsuario">Usuário (login)</label>
+          <input id="loginUsuario" type="text" class="form-control" placeholder="Ex.: joao.silva" required>
+          <div class="form-text">Sem espaços</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="perfilUsuario">Perfil</label>
+          <select id="perfilUsuario" class="form-select" required>
+            <option value="" selected disabled>Selecione</option>
+            <option value="admin">Administrador</option>
+            <option value="professor">Professor</option>
+            <option value="operador">Operador</option>
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="senhaUsuario">Senha</label>
+          <input id="senhaUsuario" type="password" class="form-control" minlength="6" required>
+          <div class="form-text">Mínimo de 6 caracteres.</div>
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="confirmarSenhaUsuario">Confirmar senha</label>
+          <input id="confirmarSenhaUsuario" type="password" class="form-control" minlength="6" required>
+        </div>
+
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ativoUsuario" checked>
+            <label class="form-check-label" for="ativoUsuario">Usuário ativo</label>
+          </div>
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+          <button class="btn btn-primary" type="submit">
+            <i class="bi bi-check2-circle me-1"></i>Salvar usuário
+          </button>
+          <button class="btn btn-outline-secondary" type="reset">
+            <i class="bi bi-eraser me-1"></i>Limpar
+          </button>
+        </div>
+      </form>
+
+      <hr class="my-4">
+
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <h5 class="mb-0">Usuários cadastrados</h5>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped align-middle" id="tabelaUsuarios">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Login</th>
+              <th>Perfil</th>
+              <th>Status</th>
+              <th class="text-end">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- via JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <!-- Footer -->
